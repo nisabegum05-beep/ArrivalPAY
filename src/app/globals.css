@@ -1,22 +1,27 @@
 @import "tailwindcss";
 
 @theme {
-  --color-true-black: #000000;
-  --color-paper-white: #ffffff;
-  --color-ink-black: #151515;
-  --color-graphite: #23241f;
-  --color-slate-gray: #3a4444;
-  --color-stone-border: #333333;
-  --color-mist-gray: #808080;
-  --color-bone: #e5e6e1;
-  --color-pale-sage: #d3e5e9;
-  --color-lavender-mist: #bbb2ce;
-  --color-dusty-rose: #cb9da2;
-  --color-deep-violet: #453b60;
-  --color-burnt-amber: #65451d;
-  --color-honey-gold: #e4b976;
-  --color-burgundy: #5c2529;
-  --color-blush-border: #d79caa;
+  /* Invoicing-dashboard palette (final direction): Slate Off-White surface,
+     Deep Navy structure/text, Emerald/Tech Teal as the single action color.
+     Token NAMES are kept stable on purpose — every rule in this file reads
+     colors through var(--color-x), so redefining values here recolors the
+     whole app without touching component markup. */
+  --color-true-black: #0f172a; /* logo/wordmark now matches Deep Navy */
+  --color-paper-white: #f8fafc; /* Slate Off-White — page canvas (60%) */
+  --color-ink-black: #0f172a; /* Deep Navy — primary text/headings (30%) */
+  --color-graphite: #1e293b; /* secondary dark surface / button hover */
+  --color-slate-gray: #475569; /* muted/secondary text */
+  --color-stone-border: #0f172a; /* structural 1px borders, Deep Navy */
+  --color-mist-gray: #64748b; /* tertiary/disabled text */
+  --color-bone: #e2e8f0; /* soft divider / secondary surface tint */
+  --color-pale-sage: #ccfbf1; /* ready/funded — light teal tint */
+  --color-lavender-mist: #cbd5e1; /* pending/processing — light slate tint */
+  --color-dusty-rose: #fecaca; /* attention/refund-pending — light red tint */
+  --color-deep-violet: #0f172a; /* secondary/outline action, links, focus ring */
+  --color-burnt-amber: #0d9488; /* Emerald / Tech Teal — action color (10%) */
+  --color-honey-gold: #0f766e; /* darker teal — used wherever teal is TEXT on the light canvas, so it still clears WCAG AA (5.2:1 vs #0d9488's 3.6:1) */
+  --color-burgundy: #b91c1c; /* real error/destructive only */
+  --color-blush-border: #fca5a5; /* attention card border, pairs with dusty-rose */
   --font-sans: "Inter Variable", Arial, sans-serif;
   --font-mono: "JetBrains Mono Variable", monospace;
   --text-micro: 0.75rem;
@@ -25,12 +30,15 @@
   --text-subheading: 1.375rem;
   --text-heading: 2.5rem;
   --text-display: 4.3125rem;
-  --radius-badge: 4px;
-  --radius-card: 8px;
-  --radius-panel: 24px;
-  --radius-hero: 40px;
-  --radius-pill: 100px;
-  --radius-action: 1000px;
+  /* Sharp, invoicing/ledger corners — no rounding on structural elements. */
+  --radius-badge: 0px;
+  --radius-card: 0px;
+  --radius-panel: 0px;
+  --radius-hero: 0px;
+  --radius-pill: 0px;
+  --radius-action: 0px;
+  /* Hard-offset shadow, applied narrowly to the primary CTA only. */
+  --shadow-cta: 1px 1px 3px 0px rgba(15, 23, 42, 0.9);
 }
 
 :root {
@@ -66,7 +74,7 @@ input {
 }
 button,
 a {
-  -webkit-tap-highlight-color: #ededed;
+  -webkit-tap-highlight-color: #e2e8f0;
   touch-action: manipulation;
 }
 button:not(:disabled),
@@ -155,7 +163,7 @@ code,
   padding-block: 8px;
 }
 .wordmark-dot {
-  color: var(--color-burnt-amber);
+  color: var(--color-honey-gold);
 }
 .main-nav {
   display: flex;
@@ -170,11 +178,11 @@ code,
   border-bottom: 1px solid transparent;
 }
 .main-nav a[aria-current="page"] {
-  color: var(--color-burnt-amber);
-  border-color: var(--color-burnt-amber);
+  color: var(--color-honey-gold);
+  border-color: var(--color-honey-gold);
 }
 .main-nav a:hover {
-  color: var(--color-burnt-amber);
+  color: var(--color-honey-gold);
 }
 .tag {
   display: inline-flex;
@@ -190,8 +198,8 @@ code,
   white-space: nowrap;
 }
 .tag--accent {
-  border-color: var(--color-burnt-amber);
-  color: var(--color-burnt-amber);
+  border-color: var(--color-honey-gold);
+  color: var(--color-honey-gold);
 }
 .eyebrow {
   font-size: var(--text-micro);
@@ -215,7 +223,7 @@ code,
   display: inline-block;
   width: 5px;
   height: 5px;
-  border-radius: var(--radius-pill);
+  border-radius: 50%; /* stays a dot even though --radius-pill is now 0 */
   background: currentColor;
   flex-shrink: 0;
 }
@@ -243,10 +251,17 @@ code,
 }
 .button--primary {
   background: var(--color-burnt-amber);
-  color: var(--color-paper-white);
+  /* Navy text on #0d9488 clears WCAG AA (4.77:1); white/off-white text on
+     this teal does not (~3.6:1) — verified, not assumed. */
+  color: var(--color-ink-black);
+  border-color: var(--color-ink-black);
+  box-shadow: var(--shadow-cta);
 }
 .button--primary:not(:disabled):hover {
   background: var(--color-graphite);
+}
+.button--primary:disabled {
+  box-shadow: none;
 }
 .button--secondary {
   color: var(--color-deep-violet);
@@ -262,7 +277,7 @@ code,
   border-radius: var(--radius-badge);
 }
 .button--text:hover {
-  color: var(--color-burnt-amber);
+  color: var(--color-honey-gold);
   text-decoration: underline;
   text-underline-offset: 5px;
 }
@@ -449,7 +464,7 @@ code,
 .process-number {
   font-size: 12px;
   padding-top: 6px;
-  color: var(--color-burnt-amber);
+  color: var(--color-honey-gold);
 }
 .process-list h3 {
   font-size: 21px;
@@ -520,8 +535,8 @@ code,
   margin-top: 24px;
 }
 .roadmap-tags .tag {
-  color: var(--color-burnt-amber);
-  border-color: var(--color-burnt-amber);
+  color: var(--color-honey-gold);
+  border-color: var(--color-honey-gold);
 }
 .site-footer {
   border-top: 1px solid var(--color-bone);
@@ -851,7 +866,7 @@ fieldset {
   top: -100px;
   padding: 12px 20px;
   background: var(--color-burnt-amber);
-  color: white;
+  color: var(--color-ink-black);
   z-index: 10;
   border-radius: var(--radius-card);
 }

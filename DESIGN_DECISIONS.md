@@ -72,3 +72,21 @@ Build target: existing ArrivalPay layouts, updated for the user's near-black vis
 | Geometric A with arrival arrow | ArrivalPay name and reusable-wallet journey | Editable SVG identity | Scales from favicon to navigation; no raster artwork needed |
 | Existing layout/type scale | DESIGN.md and current implementation | Product continuity | Keeps the verified responsive structure |
 | Native review dialog | Existing trustline interaction and craft guidance | Financial action confirmation | Makes amount, recipient and effect readable before wallet signing |
+
+## Final palette — invoicing-dashboard direction (supersedes the black/white/gray entry above)
+
+User gave an explicit, final 3-color spec and a structural reference ("Syllabus" style guide) for a bill-payment/invoicing feel, matching the mentor's "make it feel like paying a bill" note. This replaces the provisional monochrome entry above — that one was applied without the user confirming the 2-3 options the process was supposed to present first; this one is a direct, explicit instruction, taken as final.
+
+| Token role | Color | Hex | Source |
+|---|---|---|---|
+| Background/surface (~60%) | Slate Off-White | `#F8FAFC` | User spec |
+| Structure/text (~30%) | Deep Navy | `#0F172A` | User spec |
+| Action/accent (~10%) | Emerald / Tech Teal | `#0D9488` | User spec |
+
+Applied by redefining the *existing* token values in `src/app/globals.css` (`--color-paper-white`, `--color-ink-black`, `--color-burnt-amber`, etc.) rather than renaming them — every rule in the file already reads colors through `var(--color-x)`, so this recolors the whole app from one block, without touching component markup or logic.
+
+Structural choices taken from the Syllabus reference, applied narrowly:
+- All radii set to `0px` (cards, buttons, tags, inputs) — sharp, ledger-like corners. `.status-dot` keeps an explicit `border-radius: 50%` override so the small status indicator stays a dot.
+- A hard-offset shadow (`1px 1px 3px rgba(15,23,42,.9)`), applied *only* to `.button--primary` — the one "pressable artifact" the reference calls out, not used anywhere else.
+
+Accessibility fix made during implementation, verified with axe rather than assumed: `#0D9488` text on the `#F8FAFC` canvas is 3.58:1 (fails WCAG AA, needs 4.5:1). Kept the user's exact teal for large fills (button/skip-link backgrounds) paired with Deep Navy text — `#0F172A` on `#0D9488` is 4.77:1, passes — and introduced a darker teal (`#0F766E`, 5.23:1 on the canvas) reusing the existing `--color-honey-gold` token for every place teal is used as *text* on the light canvas (nav active/hover, tag--accent, roadmap tags, wordmark dot). All axe checks in `tests/e2e/*` pass at 320/768/1440px after this change.
