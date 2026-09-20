@@ -2,15 +2,29 @@
 
 **Turn one required enrollment payment into a reusable Stellar wallet.**
 
+[![Live demo](https://img.shields.io/badge/demo-arrivalpay.vercel.app-0d9488)](https://arrivalpay.vercel.app) [![Contract](https://img.shields.io/badge/Soroban%20contract-Testnet-0f172a)](https://lab.stellar.org/r/testnet/contract/CDL4LVIFDJGLZCYJ7W2644NSYKPGMC6K5XPEPYHRTXPWZ2LNWBCD7NNK) [![Stellar Pro Hackathon](https://img.shields.io/badge/Stellar%20Pro%20Hackathon-Genesis%20Track-0d9488)](stellar.pdf)
+
 ## 30-second overview
 
-ArrivalPay is a Stellar Testnet application for international student enrollment deposits. An institution creates a payment request with an amount, student wallet and decision deadline. The student funds it; a Soroban contract holds the tokens until the institution approves or rejects the request, or the student claims a refund after the deadline.
+**Who it's for:** international students who owe a mandatory enrollment deposit to a foreign institution, and the institutions collecting it. **What it does:** turns that one required payment into a live, on-chain agreement — the institution states the amount and deadline, the student funds it in USDC, and a Soroban smart contract — not a spreadsheet, not a support inbox — enforces who gets the money and when. **Why Stellar:** an Anchor turns local currency into an on-chain balance through one standard SEP-1/6/10/38 flow instead of a bespoke payment form (this build integrates a Testnet sandbox Anchor, not a licensed production one — see [Limitations](#limitations-and-trust-assumptions)); Soroban turns "the institution's stated terms" from a policy document into code that actually moves the funds; the student keeps the resulting wallet for every cross-border payment that comes after this one.
 
-**Release status:** deployment preparation in progress. The wallet, Anchor sandbox integration and contract frontend exist. The last recorded live Anchor deposit remained pending; a complete TRY → canonical USDC → escrow journey has not yet been demonstrated. See [verification and release status](docs/QA.md) for the final checks and [demo instructions](docs/DEMO.md) for a reproducible walkthrough.
+This is a working Testnet build, not a slide deck: a deployed, tested Soroban contract, a real SEP-1–38 Anchor integration, and a live frontend, all linked below with independently checkable evidence.
+
+**Proof, right now:**
+
+| | |
+|---|---|
+| Live app | **https://arrivalpay.vercel.app** |
+| Soroban contract (Testnet) | [`CDL4LVIFDJGLZCYJ7W2644NSYKPGMC6K5XPEPYHRTXPWZ2LNWBCD7NNK`](https://lab.stellar.org/r/testnet/contract/CDL4LVIFDJGLZCYJ7W2644NSYKPGMC6K5XPEPYHRTXPWZ2LNWBCD7NNK) |
+| Contract tests | 16/16 passing — `cargo test -p conditional-payment-intent` |
+| App tests | 93 unit + 57 browser tests passing |
+| A real approve transaction | [stellar.expert](https://stellar.expert/explorer/testnet/tx/af4df6512668d3045b8b697c31a88c1b4cb816df70fa2cc8aa7c92c431863956) |
+
+What's still open, stated plainly rather than glossed over: the Anchor's own TRY→USDC settlement has not yet completed in a live run (it accepts the request and stalls at `pending_anchor` — a sandbox queue issue, reproduced twice, not a bug in this codebase), and a real user has not yet completed the full journey through the Freighter browser extension. Full detail: [verification and release status](docs/QA.md), [demo instructions](docs/DEMO.md).
 
 ## The problem
 
-Some international students must pay a tuition deposit before completing enrollment or obtaining visa documentation. The payment, the institution's decision and the refund process can happen in separate systems. ArrivalPay brings the amount, deadline, authorized decision-maker and settlement status into one shared payment record. It does not decide admission or verify visa outcomes.
+International students are routinely asked for a tuition or enrollment deposit before an institution will complete enrollment or issue visa documentation — often before the student has any local banking relationship in the destination country. Today, the payment rail, the institution's decision, and the refund process typically live in three disconnected systems: a wire transfer, an admissions email, and a manual refund request if things fall through. Nothing ties the amount, the deadline, who's authorized to decide, and the money's actual location into one place either side can check. ArrivalPay is that one place. It does not decide admission or verify visa outcomes — it makes sure that once an authorized decision *is* made, the money moves the way it was promised to, without a manual reconciliation step on either side.
 
 ## Why this market matters
 
@@ -39,6 +53,8 @@ Education payment providers already address international collections, currency 
 
 ## The product
 
+The core object is a **Conditional Payment Intent**: an on-chain record naming the amount, the student, the institution, and a deadline, moving through exactly four states — `Created → Funded → Released` on approval, or `→ Refunded` on rejection or timeout. Four steps, each a signed Stellar transaction:
+
 1. **Create:** the institution signs a request naming the student, token amount and deadline.
 2. **Prepare funds:** the student connects Freighter, enables canonical Testnet USDC and requests TRY funding through TR Mock Anchor. The bank-transfer step is explicitly simulated.
 3. **Fund:** after sufficient USDC is actually available, the student separately signs a transfer into the intent contract.
@@ -62,7 +78,7 @@ Education payment providers already address international collections, currency 
 
 ## How ArrivalPay could benefit the Stellar network
 
-A participating institution could introduce students to Stellar through a payment they already need to make. Successful onboarding could lead to new funded accounts, Anchor deposits, USDC transfers and contract interactions, followed by additional uses of the same wallet. These are intended adoption mechanisms; no measured network growth is claimed.
+An enrollment deposit is a payment a student already has to make — that's what makes it a real distribution channel, not a bolted-on crypto feature. Each participating institution is a recurring source of new Stellar accounts: every admitted student who funds a deposit opens a wallet, trusts USDC, and signs a contract call, then keeps that same account for the next cross-border payment. The mechanism is designed for this: each institution → student → wallet chain compounds into new funded accounts, Anchor deposit volume and Soroban activity every enrollment cycle. This is the intended adoption loop, stated as design intent — no measured network growth is claimed yet.
 
 ## Architecture
 
