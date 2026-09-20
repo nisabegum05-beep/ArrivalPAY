@@ -171,7 +171,7 @@ The Phase 6 recorded baseline was **82 JavaScript tests, 48 browser tests and 16
 
 ## Live demo and Testnet evidence
 
-The public frontend URL will be recorded here after a successful deployment and public smoke check.
+**Live frontend:** https://arrivalpay.vercel.app — deployed from this repository's `main` branch; a post-deploy smoke check confirmed `/`, `/student`, `/institution` and `/arrival-services` all return HTTP 200.
 
 **Intent contract:** `CDL4LVIFDJGLZCYJ7W2644NSYKPGMC6K5XPEPYHRTXPWZ2LNWBCD7NNK` — [Stellar Lab](https://lab.stellar.org/r/testnet/contract/CDL4LVIFDJGLZCYJ7W2644NSYKPGMC6K5XPEPYHRTXPWZ2LNWBCD7NNK).
 

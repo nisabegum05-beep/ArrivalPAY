@@ -255,3 +255,40 @@ Frontend'in kontrata bağlanması (`NEXT_PUBLIC_INTENT_CONTRACT_ID`, contract bi
 ### Sıradaki faz
 
 Faz 6: Conditional Payment Intent uçtan uca — kurum create formu, öğrenci fund akışı (Anchor'dan gelen USDC ile), approve/reject/timeout UI, kontrat durumunun frontend'de okunması. Şartname protokolü gereği onay bekleniyor.
+
+## 20 Eylül 2026 — Git deposu başlatıldı, GitHub'a push edildi, Vercel'de canlıya alındı
+
+Saat 09:57 itibarıyla el kitabındaki 12:00 teslim saatine yaklaşık 2 saat kalmıştı; kullanıcı önceliği canlı demo + public repo linkine verdi.
+
+### Durum tespiti
+
+Önceki oturumdan bu yana, PROGRESS.md'de kaydı olmayan büyük miktarda iş bulundu: Faz 7-9 kapsamındaki dokümanlar (`docs/{ARCHITECTURE,MARKET,SECURITY_AND_LIMITATIONS,DEMO,DEPLOYMENT,QA}.md`, `docs/MENTOR_BRIEFING.md`), dar kapsamlı Arrival Services QR modülü (`src/features/arrival-services/*`, `src/app/arrival-services`, `src/services/stellar/arrival-payment.ts`), siyah marka tokenı ve logo (`--color-true-black`, `src/components/ui/logo.tsx`, `public/brand/arrivalpay-mark.svg`), favicon/opengraph route'ları, `vercel.json`. Bunların satır satır denetimi bu oturumda yapılmadı — zaman kısıtı nedeniyle önce doğrulama (lint/typecheck/test/build) ve canlıya alma önceliklendirildi.
+
+`DESIGN_DECISIONS.md`'de siyah/CTA rengi kararının kullanıcıdan netleştirilmiş 2-3 seçenek onayı alınmadan "provisionally interpreted" olarak uygulandığı görüldü — bu, orijinal talimatın istediği onay adımını atlamış olabilir; açık kalem olarak burada not düşülüyor, bir sonraki oturumda kullanıcıyla netleştirilmeli.
+
+### Doğrulama
+
+| Kontrol | Sonuç |
+|---|---|
+| `npm run lint` | Geçti |
+| `npm run typecheck` | Geçti |
+| `npm test` | 93/93 geçti |
+| `npm run build` | Geçti (10 route, `/arrival-services` dahil) |
+
+Secret taraması: `.env*` (`.env.example` hariç) `.gitignore`'da; repoda private key/JWT/secret deseni bulunmadı.
+
+### Yapılanlar
+
+- İlk git commit'i atıldı (150 dosya) — bu, projenin tüm Faz 0-6+ geçmişini tek bir başlangıç commit'inde topluyor; sahte/parçalı bir commit geçmişi uydurulmadı.
+- `git remote add origin https://github.com/nisabegum05-beep/ArrivalPAY.git`, `git push -u origin main` — kullanıcının verdiği repo bilgisiyle.
+- `npx vercel link --project arrivalpay` ve `npx vercel --prod --yes` — kullanıcının zaten kimlik doğrulaması yapılmış Vercel hesabıyla (`nisabegum05-beep`), kullanıcının açık onayı üzerine.
+- Canlı URL doğrulandı: `https://arrivalpay.vercel.app` — `/`, `/student`, `/institution`, `/arrival-services` hepsi HTTP 200, sayfa başlığı doğru render ediliyor.
+- README.md'deki "Live demo and Testnet evidence" bölümündeki placeholder gerçek URL ile dolduruldu.
+
+### Bilinen eksikler
+
+Faz 7-9 ve QR modülünün kodu bu oturumda satır satır incelenmedi (yalnızca otomatik testler ve build ile doğrulandı). Siyah/CTA tasarım kararı kullanıcıyla netleştirilmedi. Gerçek kullanıcı Freighter kabulü hâlâ gözlenmedi. Vercel ortam değişkenleri kontrol edilmedi (uygulama varsayılanlarla çalışıyor, `NEXT_PUBLIC_*` override gerekmiyor). Hackathon submission portalı hâlâ TBD; takım bilgisi/pitch deck linki bu depoya eklenmedi.
+
+### Sıradaki adım
+
+Kalan zamanda: (1) siyah/CTA kararını kullanıcıyla netleştir, (2) Faz 7-9 ve QR kodunu gerçekten satır satır incele, (3) hackathon submission formunu (takım adı, pitch deck, track) kullanıcıdan iste ve doldur.
