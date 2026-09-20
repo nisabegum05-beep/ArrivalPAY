@@ -1,0 +1,15 @@
+{
+  "verifiedAt": "2026-09-20T05:13:18.329Z",
+  "kind": "ephemeral Node fixture using this app's own src/services/soroban code; not Freighter or the Stellar CLI",
+  "contractId": "CDL4LVIFDJGLZCYJ7W2644NSYKPGMC6K5XPEPYHRTXPWZ2LNWBCD7NNK",
+  "intentId": "4d435005a297d6996c2ed351f6cd4fe078ade6e8e3dd215206063d80953e8298",
+  "tokenContractId": "CBZSOXHO6RK2PMLPZT6PBQIFPG5ZDAKHGGY426MSTPOAYHKKQTCYUX2D",
+  "institution": "GBWHUSI5EGLBHZHA5LZ2273MXHUQSLNEFIUC6F5E47WN535UOUKCHYYA",
+  "student": "GDDM7UFY7ZFZZ72C3VVYMHFROP66G6RUR6MGSYW7LG4XXGSVXRELIPYS",
+  "amount": "25.0000000",
+  "createTxHash": "be5d996e381d79fe62a1148891ade2308fdc0f941374ca42f049a3e96b977ab9",
+  "fundTxHash": "fe030934b563885b1e830429fd5b7b7fbcdf92c1dcc3a8f4203f6eb4ab4113db",
+  "approveTxHash": "af4df6512668d3045b8b697c31a88c1b4cb816df70fa2cc8aa7c92c431863956",
+  "finalStatus": "Released",
+  "finalResolution": "Approved"
+}

@@ -1,0 +1,24 @@
+{
+  "verifiedAt": "2026-09-20T05:56:45.084Z",
+  "kind": "ephemeral server-side test fixture; not a Freighter wallet test",
+  "address": "GCQHC3YDSA7LMHOJZJIXBKDSCURMSGTM3WSJ34Z5CYKJBAG5VXRGCNZY",
+  "discovery": {
+    "homeDomain": "tr-mock-anchor.fly.dev",
+    "webAuthEndpoint": "https://tr-mock-anchor.fly.dev/auth",
+    "transferServer": "https://tr-mock-anchor.fly.dev/sep6",
+    "kycServer": "https://tr-mock-anchor.fly.dev/sep12",
+    "quoteServer": "https://tr-mock-anchor.fly.dev/sep38",
+    "signingKey": "GDXYO6FJCNXZEWGXD54GT76FGFYLOLSOGSOJLNQ6WGHCGEQPO7NTE73M",
+    "assetIssuer": "GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5"
+  },
+  "quoteId": "qt_v0g4f56cxoqpgg5ggwz9",
+  "sellAmountTry": "100.00",
+  "buyAmountUsdc": "2.0396090",
+  "depositId": "sep_f00nsb73ycyn4kx8ur60",
+  "depositIban": "TR050009900000000000000001",
+  "depositMemo": "TRMA-NDKV-ZDQC",
+  "finalTransactionStatus": "pending_anchor",
+  "settled": false,
+  "stellarTransactionId": null,
+  "note": "Deposit request and sandbox bank-transfer simulation were both accepted by the anchor; final USDC settlement was still pending when this evidence was captured."
+}

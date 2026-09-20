@@ -1,0 +1,14 @@
+.git
+.next
+node_modules
+target
+contracts/**/target
+.soroban
+.stellar
+.env*
+!.env.example
+test-results
+playwright-report
+coverage
+*.tsbuildinfo
+stellar.pdf

@@ -1,0 +1,54 @@
+{
+  "verifiedAt": "2026-09-20T07:30:00Z",
+  "network": "Stellar Testnet",
+  "kind": "real Testnet deployment and invocations using Stellar CLI identities; not the user's Freighter wallet",
+  "contract": {
+    "id": "CDL4LVIFDJGLZCYJ7W2644NSYKPGMC6K5XPEPYHRTXPWZ2LNWBCD7NNK",
+    "wasmHash": "ce0fb9967d98e41e9091a30ee5cc7690c7956f9157fde54893131dc9cf36b2ea",
+    "wasmSizeBytes": 10818,
+    "explorerUrl": "https://lab.stellar.org/r/testnet/contract/CDL4LVIFDJGLZCYJ7W2644NSYKPGMC6K5XPEPYHRTXPWZ2LNWBCD7NNK",
+    "uploadTxUrl": "https://stellar.expert/explorer/testnet/tx/72b38ac1e5ce93ffe406a6fbe0c6ac72547c57feef6add7dd77b1b1f869b721b",
+    "deployTxUrl": "https://stellar.expert/explorer/testnet/tx/c40d9016760ebda5aeab334a101c9d5cf4e5f4472de73b363d08960d19372433"
+  },
+  "testToken": {
+    "note": "A throwaway classic asset (code TEST) issued by the deployer identity and wrapped as a Stellar Asset Contract, used only to exercise the contract's token transfers end to end on Testnet. Not the real USDC/anchor issuer.",
+    "assetCode": "TEST",
+    "sacAddress": "CD5JL6PR24OQDN54457TKCL2N5RQG5NZVXLPVMD2TGHJQKAR63P5CUPX",
+    "deployTxUrl": "https://stellar.expert/explorer/testnet/tx/42291817a645505dda7079d496d9ea454582b3626b0dc178b6a4fb4074604d8c"
+  },
+  "identities": {
+    "institution": "GABEWDMGESRUHBQOBWBSFUBJSSAHHRYPJ47H5CUULQMNMGXOXFHLNJMI",
+    "student": "GDQX7CDVDBZEVCXWAS227A76JDJWQSXKONEIPME6E633G4AEQBWGTDNE"
+  },
+  "approveFlow": {
+    "intentId": "1111111111111111111111111111111111111111111111111111111111111111",
+    "amount": "500.0000000",
+    "steps": [
+      { "call": "create_intent", "txUrl": "https://stellar.expert/explorer/testnet/tx/fbb580f30689d637860aaa0ee82eb121926a27606175c92123f89f5657315acd" },
+      { "call": "fund_intent", "txUrl": "https://stellar.expert/explorer/testnet/tx/dc265627d161d7441fc37a37320dd75c48247e742d5f8a7b47a2bbbbe6d90a26" },
+      {
+        "call": "approve_intent",
+        "note": "First attempt failed with a real, atomic revert: the institution had no trustline for the test asset yet (Error(Contract, #13)). The intent's on-chain status stayed Funded, unchanged, proving the failed transfer did not corrupt state. Retried after establishing the trustline.",
+        "txUrl": "https://stellar.expert/explorer/testnet/tx/3853d3c29a4c9be117110661696e3222caa40fc2d2de4fd9a92b622bbd826960"
+      }
+    ],
+    "finalStatus": "Released",
+    "finalResolution": "Approved"
+  },
+  "rejectFlow": {
+    "intentId": "2222222222222222222222222222222222222222222222222222222222222222",
+    "amount": "100.0000000",
+    "steps": [
+      { "call": "create_intent", "txUrl": "https://stellar.expert/explorer/testnet/tx/fdc3a9cda0c8d3bcdc6a562c464be414eed2f28e16dffc2e43b12bb8f573a14f" },
+      { "call": "fund_intent", "txUrl": "https://stellar.expert/explorer/testnet/tx/5056d9d026a7d55ae0d6faf120bdbe90bfeaa976378fdba1d6aaf530cdcab953" },
+      { "call": "reject_intent", "txUrl": "https://stellar.expert/explorer/testnet/tx/4da8ade3bcb4e70043332c49373a2cd405fb17953ac98ffbecf141b2d88bea23" }
+    ],
+    "finalStatus": "Refunded",
+    "finalResolution": "Rejected"
+  },
+  "rustTests": {
+    "command": "cargo test -p conditional-payment-intent",
+    "result": "16 passed; 0 failed"
+  },
+  "notScope": "The timeout-refund path, double-settlement and unauthorized-caller rejections are proven in the Rust test suite (src/test.rs), not repeated here as live Testnet transactions, since they are negative/time-dependent cases better suited to deterministic tests than a live demo account."
+}

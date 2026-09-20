@@ -1,0 +1,14 @@
+{
+  "verifiedAt": "2026-09-20T00:23:02.570Z",
+  "network": "Stellar Testnet",
+  "kind": "ephemeral server-side test fixture; not a Freighter wallet test",
+  "address": "GDXPSZBRMDB3HK3LPJESO4AIIAHEPDRHSSFLQINCHLOGOBSLKD53BY2U",
+  "accountUrl": "https://stellar.expert/explorer/testnet/account/GDXPSZBRMDB3HK3LPJESO4AIIAHEPDRHSSFLQINCHLOGOBSLKD53BY2U",
+  "hash": "ce9a94b9789e9da01f9aa183518e2a4e41e8bb6aebd6e83b4dc457614b94c333",
+  "transactionUrl": "https://stellar.expert/explorer/testnet/tx/ce9a94b9789e9da01f9aa183518e2a4e41e8bb6aebd6e83b4dc457614b94c333",
+  "usdcIssuer": "GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5",
+  "usdcAccess": "authorized",
+  "usdcBalance": "0.0000000",
+  "fee": "0.0000100",
+  "reserve": "0.5000000"
+}
