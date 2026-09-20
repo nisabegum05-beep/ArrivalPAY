@@ -256,9 +256,21 @@ code,
   color: var(--color-ink-black);
   border-color: var(--color-ink-black);
   box-shadow: var(--shadow-cta);
+  transition:
+    background-color 150ms ease,
+    transform 120ms ease,
+    box-shadow 120ms ease;
 }
 .button--primary:not(:disabled):hover {
   background: var(--color-graphite);
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0px 0px var(--color-ink-black);
+}
+.button--primary:not(:disabled):active {
+  /* The signature press: the button travels into its own shadow and sits
+     flush on the page, like a sticker being pressed down. */
+  transform: translate(1px, 1px);
+  box-shadow: none;
 }
 .button--primary:disabled {
   box-shadow: none;
